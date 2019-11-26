@@ -5,8 +5,8 @@ use structopt::StructOpt;
 
 use dsf_core::types::*;
 
-use crate::{ServiceIdentifier, Body, try_load_file, try_parse_kv};
-
+use crate::{ServiceIdentifier, Body};
+use crate::helpers::{try_load_file, try_parse_kv};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ServiceInfo {

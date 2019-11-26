@@ -8,8 +8,8 @@ use structopt::StructOpt;
 
 use dsf_core::types::*;
 
-use crate::{ServiceIdentifier, try_parse_sock_addr, parse_duration};
-
+use crate::{ServiceIdentifier};
+use crate::helpers::{try_parse_sock_addr, parse_duration};
 
 
 /// PeerState defines the state of a peer

@@ -5,11 +5,7 @@ use structopt::StructOpt;
 
 use dsf_core::types::*;
 
-
-
-
-
-use super::try_parse_sock_addr;
+use crate::helpers::try_parse_sock_addr;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub enum ConfigCommands {

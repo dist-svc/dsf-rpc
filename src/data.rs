@@ -1,13 +1,11 @@
 
-use std::fmt;
-use std::time::SystemTime;
-
 use structopt::StructOpt;
 
 use dsf_core::types::*;
 use dsf_core::base::Body;
 
 use crate::{ServiceIdentifier};
+use crate::helpers::{data_from_str};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataInfo {
@@ -66,9 +64,6 @@ pub struct PublishOptions {
     pub data_file: Option<String>,
 }
 
-fn data_from_str(s: &str) -> Vec<u8> {
-    s.as_bytes().to_vec()
-}
 
 impl PublishOptions {
     pub fn new(id: Id) -> Self {

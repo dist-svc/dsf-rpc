@@ -82,7 +82,7 @@ pub struct CreateOptions {
     /// Page Kind (defaults to Generic)
     pub page_kind: Option<u16>,
 
-    #[structopt(name = "body", parse(try_from_str = "try_load_file"))]
+    #[structopt(name = "body", parse(try_from_str = try_load_file))]
     /// Service Page Body (loaded from the specified file)
     pub body: Option<Body>,
 
@@ -90,7 +90,7 @@ pub struct CreateOptions {
     /// Service Addresses
     pub addresses: Vec<Address>,
 
-    #[structopt(short = "m", long = "metadata", parse(try_from_str = "try_parse_kv"))]
+    #[structopt(short = "m", long = "metadata", parse(try_from_str = try_parse_kv))]
     /// Service Metadata key:value pairs
     pub metadata: Vec<(String, String)>,
 

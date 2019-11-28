@@ -46,6 +46,8 @@ pub struct ListOptions {
     pub n: usize,
 }
 
+pub type Data = Vec<u8>;
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct PublishOptions {
     #[structopt(flatten)]
@@ -55,9 +57,9 @@ pub struct PublishOptions {
     /// Data page kind (defaults to generic)
     pub kind: Option<DataKind>,
 
-    #[structopt(short = "d", long = "data", parse(from_str = "data_from_str"))]
+    #[structopt(short = "d", long = "data", parse(from_str = data_from_str))]
     /// Data body as a string
-    pub data: Option<Vec<u8>>,
+    pub data: Option<Data>,
  
     #[structopt(long="data-file")]
     /// File to load data from for publishing

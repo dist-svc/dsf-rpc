@@ -119,7 +119,7 @@ pub enum PeerCommands {
 /// ConnectOptions passed to connect function
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct ConnectOptions {
-    #[structopt(parse(try_from_str = "try_parse_sock_addr"))]
+    #[structopt(parse(try_from_str = try_parse_sock_addr))]
     /// Socket address for connection attempt
     pub address: Address,
 
@@ -127,7 +127,7 @@ pub struct ConnectOptions {
     /// ID of the remote node
     pub id: Option<Id>,
 
-    #[structopt(short = "t", long = "timeout", parse(try_from_str = "parse_duration"))]
+    #[structopt(short = "t", long = "timeout", parse(try_from_str = parse_duration))]
     /// ID of the remote node
     pub timeout: Option<Duration>,
 }

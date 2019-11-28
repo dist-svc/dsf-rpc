@@ -20,7 +20,7 @@ pub enum ConfigCommands {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct SocketAddress {
-    #[structopt(parse(try_from_str = "try_parse_sock_addr"))]
+    #[structopt(parse(try_from_str = try_parse_sock_addr))]
     /// Peer socket address
     pub address: Address
 }

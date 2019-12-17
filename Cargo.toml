@@ -1,10 +1,11 @@
 [package]
 name = "dsf-rpc"
 description = "DSF RPC object/message definitions"
-version = "0.1.0"
 authors = ["ryan <ryan@kurte.nz>"]
 repository = "https://github.com/dist-svc/dsf-rpc"
+license = "MPL-2.0"
 keywords = [ "DSF" ]
+version = "0.1.0"
 edition = "2018"
 
 

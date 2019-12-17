@@ -11,9 +11,6 @@ use structopt::StructOpt;
 extern crate rand;
 use rand::random;
 
-extern crate actix;
-use actix::Message;
-
 extern crate dsf_core;
 use dsf_core::types::*;
 
@@ -50,10 +47,6 @@ pub trait Rpc {
 pub struct Request {
     req_id: u64,
     kind: RequestKind,
-}
-
-impl Message for Request {
-    type Result = Result<Response, Error>;
 }
 
 impl Request {
@@ -133,7 +126,7 @@ pub struct StreamOptions {
 }
 
 /// Response container for replies from the daemon to the client
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Message)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Response {
     req_id: u64,
     kind: ResponseKind,

@@ -1,8 +1,12 @@
 [package]
 name = "dsf-rpc"
+description = "DSF RPC object/message definitions"
 version = "0.1.0"
 authors = ["ryan <ryan@kurte.nz>"]
+repository = "https://github.com/dist-svc/dsf-rpc"
+keywords = [ "DSF" ]
 edition = "2018"
+
 
 [dependencies]
 structopt = "0.3.5"

@@ -3,7 +3,6 @@ name = "dsf-rpc"
 version = "0.1.0"
 authors = ["ryan <ryan@kurte.nz>"]
 edition = "2018"
-publish = false
 
 [dependencies]
 structopt = "0.3.5"

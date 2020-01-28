@@ -153,6 +153,7 @@ impl Response {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum ResponseKind {
     None,
+    
     Status(StatusInfo),
     Connected(ConnectInfo),
     Peers(Vec<(Id, PeerInfo)>),

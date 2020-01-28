@@ -28,6 +28,7 @@ pub enum ServiceState {
     Located,
     Subscribed,
 }
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub enum ServiceCommands {
     #[structopt(name = "list")]
@@ -150,6 +151,7 @@ impl RegisterOptions {
 pub struct RegisterInfo {
     pub page_version: u16,
     pub replica_version: Option<u16>,
+    pub peers: usize,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]

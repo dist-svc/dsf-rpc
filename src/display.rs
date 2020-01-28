@@ -126,17 +126,18 @@ impl Display for ServiceState {
         }
 
         let s = match self {
-            Created =>    "created   ".yellow(),
+            Created =>    "created".yellow(),
             Registered => "registered".green(),
-            Located =>    "located   ".magenta(),
+            Located =>    "located".magenta(),
             Subscribed => "subscribed".blue(),
         };
 
-        write!(f, "{}", s)?;
+        f.pad(&s)?;
 
         Ok(())
     }
 }
+
 
 impl Display for ServiceInfo {
     fn fmt(&self, f: &mut Formatter) -> Result {

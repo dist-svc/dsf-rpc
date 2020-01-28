@@ -103,6 +103,10 @@ pub enum PeerCommands {
     /// Fetches information for a given peer
     Info(ServiceIdentifier),
 
+    #[structopt(name = "search")]
+    /// Searches the database for a peer
+    Search(SearchOptions),
+
     #[structopt(name = "remove")]
     /// Removes a known peer from the database
     Remove(ServiceIdentifier),
@@ -137,6 +141,19 @@ pub struct ConnectOptions {
 pub struct PeerOptions {
 
 }
+
+/// ConnectOptions passed to connect function
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+pub struct SearchOptions {
+    #[structopt(short = "i", long = "id")]
+    /// ID of the peer to find
+    pub id: Id,
+
+    #[structopt(short = "t", long = "timeout", parse(try_from_str = parse_duration))]
+    /// ID of the remote node
+    pub timeout: Option<Duration>,
+}
+
 
 /// ConnectInfo returned by connect function
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

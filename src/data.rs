@@ -60,16 +60,12 @@ pub struct PublishOptions {
     #[structopt(short = "d", long = "data", parse(from_str = data_from_str))]
     /// Data body as a string
     pub data: Option<Data>,
- 
-    #[structopt(long="data-file")]
-    /// File to load data from for publishing
-    pub data_file: Option<String>,
 }
 
 
 impl PublishOptions {
     pub fn new(id: Id) -> Self {
-        Self{service: ServiceIdentifier{id: Some(id), index: None}, kind: None, data: None, data_file: None}
+        Self{service: ServiceIdentifier{id: Some(id), index: None}, kind: None, data: None}
     }
 }
 

@@ -1,6 +1,9 @@
 
-extern crate chrono_humanize;
+use std::time::SystemTime;
 
+extern crate chrono;
+extern crate chrono_english;
+extern crate chrono_humanize;
 extern crate humantime;
 
 extern crate futures;
@@ -68,11 +71,11 @@ impl Request {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct ServiceIdentifier {
-    #[structopt(short = "i", long = "id")]
+    #[structopt(short = "i", long = "id", group="identifier")]
     /// Global service ID
     pub id: Option<Id>,
 
-    #[structopt(short = "n", long = "index")]
+    #[structopt(short = "n", long = "index", group="identifier")]
     /// Local service index
     pub index: Option<usize>,
 }
@@ -85,6 +88,30 @@ impl ServiceIdentifier {
     pub fn index(index: usize) -> Self {
         Self{id: None, index: Some(index)}
     }
+}
+
+/// Paginator object supports paginating responses from the daemon
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+pub struct PageBounds {
+    #[structopt(long)]
+    /// Maximum number of responses to return
+    pub count: Option<usize>,
+
+    #[structopt(long)]
+    /// Offset of returned results
+    pub offset: Option<usize>,
+}
+
+/// TimeBounded object supports limiting queries by time
+#[derive(Debug, Clone, StructOpt)]
+pub struct TimeBounds {
+    /// Start time for data query
+    #[structopt(long, parse(try_from_str = timestamp_from_str))]
+    pub from: Option<SystemTime>,
+
+    /// End time for data query
+    #[structopt(long, parse(try_from_str = timestamp_from_str))]
+    pub until: Option<SystemTime>,
 }
 
 /// Specific request kinds for issuing requests to the daemon from the client
@@ -188,4 +215,8 @@ pub struct Body {
     pub data: Vec<u8>,
 }
 
-
+/// Parse a timestamp from a provided string
+fn timestamp_from_str(s: &str) -> Result<SystemTime, chrono_english::DateError> {
+    let t = chrono_english::parse_date_string(s, chrono::Local::now(), chrono_english::Dialect::Uk)?;
+    Ok(t.into())
+}

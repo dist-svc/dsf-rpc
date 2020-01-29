@@ -6,7 +6,7 @@ use structopt::StructOpt;
 use dsf_core::types::*;
 
 use crate::{ServiceIdentifier, Body};
-use crate::helpers::{try_load_file, try_parse_kv};
+pub use crate::helpers::{try_load_file, try_parse_key_value};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ServiceInfo {
@@ -33,7 +33,7 @@ pub enum ServiceState {
 pub enum ServiceCommands {
     #[structopt(name = "list")]
     /// List known services
-    List(ServiceOptions),
+    List(ListOptions),
 
     #[structopt(name = "create")]
     /// Create a new service
@@ -60,16 +60,12 @@ pub enum ServiceCommands {
     SetKey(SetKeyOptions),
 }
 
-impl ServiceCommands {
-    pub fn locate(id: Id) -> Self {
-        ServiceCommands::Search(LocateOptions{id})
-    }
-}
-
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct ServiceOptions {
-
+pub struct ListOptions {
+    #[structopt(long)]
+    /// Application ID for filtering
+    pub application_id: Option<u16>,
 }
 
 
@@ -91,7 +87,7 @@ pub struct CreateOptions {
     /// Service Addresses
     pub addresses: Vec<Address>,
 
-    #[structopt(short = "m", long = "metadata", parse(try_from_str = try_parse_kv))]
+    #[structopt(short = "m", long = "metadata", parse(try_from_str = try_parse_key_value))]
     /// Service Metadata key:value pairs
     pub metadata: Vec<(String, String)>,
 

@@ -5,7 +5,7 @@ use std::fmt::{Display, Formatter, Result};
 use colored::Colorize;
 
 use dsf_core::base::Body;
-use crate::{PeerInfo, PeerState, ServiceInfo, ServiceState, DataInfo};
+use crate::{PeerInfo, PeerState, ServiceInfo, DataInfo};
 
 impl Display for PeerState {
     fn fmt(&self, f: &mut Formatter) -> Result {
@@ -111,28 +111,6 @@ impl Display for DataInfo {
         } else {
             write!(f, "{}", self.signature)?;
         }
-
-        Ok(())
-    }
-}
-
-
-impl Display for ServiceState {
-    fn fmt(&self, f: &mut Formatter) -> Result {
-        use ServiceState::*;
-
-        if f.sign_plus() {
-            write!(f, "state: ")?;
-        }
-
-        let s = match self {
-            Created =>    "created".yellow(),
-            Registered => "registered".green(),
-            Located =>    "located".magenta(),
-            Subscribed => "subscribed".blue(),
-        };
-
-        f.pad(&s)?;
 
         Ok(())
     }

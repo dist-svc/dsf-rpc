@@ -11,6 +11,11 @@ use futures::prelude::*;
 extern crate structopt;
 use structopt::StructOpt;
 
+extern crate strum;
+
+#[macro_use]
+extern crate strum_macros;
+
 extern crate rand;
 use rand::random;
 

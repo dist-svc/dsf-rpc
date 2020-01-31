@@ -9,6 +9,8 @@ use crate::{ServiceIdentifier, Body};
 pub use crate::helpers::{try_load_file, try_parse_key_value};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+//#[cfg_attr(feature = "diesel", derive(diesel::Queryable))] 
+//#[cfg_attr(feature = "diesel", table_name="services")]
 pub struct ServiceInfo {
     pub id: Id,
     pub index: usize,
@@ -16,12 +18,12 @@ pub struct ServiceInfo {
     pub public_key: PublicKey,
     pub secret_key: Option<SecretKey>,
     pub last_updated: Option<SystemTime>,
-    pub subscibers: usize,
+    pub subscribers: usize,
     pub replicas: usize,
     pub origin: bool,
 }
 
-#[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize)]
+#[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize, Display, EnumString)]
 pub enum ServiceState {
     Created,
     Registered,

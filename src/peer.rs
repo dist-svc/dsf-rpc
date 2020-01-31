@@ -34,6 +34,7 @@ pub enum PeerAddress {
 
 /// PeerInfo object for storage and exchange of peer information
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "diesel", derive(diesel::Queryable))] 
 pub struct PeerInfo {
     pub id: Id,
     pub address: PeerAddress,

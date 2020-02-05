@@ -13,11 +13,11 @@ use crate::helpers::{try_parse_sock_addr, parse_duration};
 
 
 /// PeerState defines the state of a peer
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Display)]
 pub enum PeerState {
     /// A peer that has not been contacted exists in the Unknown state
     Unknown,
-    /// Once public keys have been exchanged this moces to the Known state
+    /// Once public keys have been exchanged this moves to the Known state
     Known(PublicKey),
     
     //Peered(Service),
@@ -43,12 +43,13 @@ pub struct PeerInfo {
 
     pub sent: u64,
     pub received: u64,
+    pub blocked: bool,
 }
 
 
 impl PeerInfo {
     pub fn new(id: Id, address: PeerAddress, state: PeerState, seen: Option<SystemTime>) -> Self {
-        Self{id, address, state, seen, sent: 0, received: 0}
+        Self{id, address, state, seen, sent: 0, received: 0, blocked: false}
     }
 
     /// Fetch the address of a peer

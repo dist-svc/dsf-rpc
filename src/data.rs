@@ -13,8 +13,8 @@ pub struct DataInfo {
 
     pub index: u16,
     pub body: Body,
-    pub parent: Option<Id>,
 
+    pub previous: Option<Signature>,
     pub signature: Signature,
 }
 

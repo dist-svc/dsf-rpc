@@ -15,9 +15,15 @@ pub struct ServiceInfo {
     pub id: Id,
     pub index: usize,
     pub state: ServiceState,
+
     pub public_key: PublicKey,
     pub secret_key: Option<SecretKey>,
+
     pub last_updated: Option<SystemTime>,
+    
+    pub primary_page: Option<Signature>,
+    pub replica_page: Option<Signature>,
+
     pub subscribers: usize,
     pub replicas: usize,
     pub origin: bool,

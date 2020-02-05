@@ -5,24 +5,7 @@ use std::fmt::{Display, Formatter, Result};
 use colored::Colorize;
 
 use dsf_core::base::Body;
-use crate::{PeerInfo, PeerState, ServiceInfo, DataInfo};
-
-impl Display for PeerState {
-    fn fmt(&self, f: &mut Formatter) -> Result {
-        if f.sign_plus() {
-            write!(f, "state: ")?;
-        }
-
-        let s = match self {
-            PeerState::Unknown  => "unknown".red(),
-            PeerState::Known(_) => "known  ".green(),
-        };
-
-        write!(f, "{}", s)?;
-
-        Ok(())
-    }
-}
+use crate::{PeerInfo, ServiceInfo, DataInfo};
 
 
 impl Display for PeerInfo {
@@ -95,7 +78,7 @@ impl Display for DataInfo {
             write!(f, "{}", body)?;
         }
 
-        let parent = match &self.parent {
+        let parent = match &self.previous {
             Some(p) => format!("{}", p).green(),
             None => format!("None").red(),
         };

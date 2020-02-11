@@ -21,7 +21,7 @@ pub fn try_parse_sock_addr(from: &str) -> Result<SocketAddr, IoError> {
 
 pub fn try_load_file(from: &str) -> Result<Body, IoError> {
     let data = fs::read(from)?;
-    Ok(Body{data})
+    Ok(Body::Cleartext(data))
 }
 
 

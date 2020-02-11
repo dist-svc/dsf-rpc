@@ -215,10 +215,7 @@ pub struct StatusInfo {
     pub services: usize,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Body {
-    pub data: Vec<u8>,
-}
+pub use dsf_core::base::Body;
 
 /// Parse a timestamp from a provided string
 fn timestamp_from_str(s: &str) -> Result<SystemTime, chrono_english::DateError> {

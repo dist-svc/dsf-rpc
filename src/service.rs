@@ -17,6 +17,7 @@ pub struct ServiceInfo {
     pub state: ServiceState,
 
     pub public_key: PublicKey,
+    pub private_key: Option<PrivateKey>,
     pub secret_key: Option<SecretKey>,
 
     pub last_updated: Option<SystemTime>,

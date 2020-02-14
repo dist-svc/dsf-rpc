@@ -7,6 +7,13 @@ use colored::Colorize;
 use dsf_core::base::Body;
 use crate::{PeerInfo, ServiceInfo, DataInfo};
 
+#[cfg(nope)]
+impl Display for PeerAddress {
+    fn fmt(&self, f: &mut Formatter) -> Result {
+
+
+    }
+}
 
 impl Display for PeerInfo {
     fn fmt(&self, f: &mut Formatter) -> Result {

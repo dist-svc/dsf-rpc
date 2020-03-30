@@ -148,13 +148,16 @@ pub enum RequestKind {
 
     /// Stream data from a given service
     #[structopt(name = "stream")]
-    Stream(StreamOptions),
+    Stream(StreamCommand),
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct StreamOptions {
+pub struct StreamCommand {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
+    
+    #[structopt(flatten)]
+    pub options: SubscribeOptions,
 }
 
 /// Response container for replies from the daemon to the client

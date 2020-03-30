@@ -48,21 +48,21 @@ pub enum ServiceCommands {
     /// Create a new service
     Create(CreateOptions),
 
-    #[structopt(name = "register")]
-    /// Create am existing service
-    Register(RegisterOptions),
-
     #[structopt(name = "search")]
     /// Search for an existing service
     Search(LocateOptions),
 
+    #[structopt(name = "register")]
+    /// Create am existing / known service
+    Register(RegisterCommand),
+
     #[structopt(name = "subscribe")]
-    /// Subscribe to a service
-    Subscribe(SubscribeOptions),
+    /// Subscribe to a known service
+    Subscribe(SubscribeCommand),
 
     #[structopt(name = "unsubscribe")]
-    /// Subscribe to a service
-    Unsubscribe(UnsubscribeOptions),
+    /// Unsubscribe from a known service
+    Unsubscribe(UnsubscribeCommand),
 
     #[structopt(name = "set-key")]
     /// Set the encryption/decryption key for a given service
@@ -137,19 +137,28 @@ pub struct CreateInfo {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct RegisterOptions {
+pub struct RegisterCommand {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
 
+    #[structopt(flatten)]
+    pub options: RegisterOptions,
+}
+
+impl RegisterCommand {
+    pub fn new(id: Id) -> Self {
+        Self{
+            service: ServiceIdentifier{id: Some(id), index: None}, 
+            options: RegisterOptions{ no_replica: false },
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+pub struct RegisterOptions {
     #[structopt(long="no-replica")]
     /// Do not become a replica for the registered service
     pub no_replica: bool,
-}
-
-impl RegisterOptions {
-    pub fn new(id: Id) -> Self {
-        Self{service: ServiceIdentifier{id: Some(id), index: None}, no_replica: false}
-    }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -172,17 +181,34 @@ pub struct LocateInfo {
     pub updated: bool,
 }
 
-
+/// SubscibeCommand used in RPC command structure
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct SubscribeOptions {
+pub struct SubscribeCommand {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
+
+    #[structopt(flatten)]
+    pub options: SubscribeOptions,
+}
+
+/// Options for subscribe requests
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+pub struct SubscribeOptions {
+    
+}
+
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+pub struct UnsubscribeCommand {
+    #[structopt(flatten)]
+    pub service: ServiceIdentifier,
+    #[structopt(flatten)]
+    pub options: UnsubscribeOptions,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct UnsubscribeOptions {
-    #[structopt(flatten)]
-    pub service: ServiceIdentifier,
+    
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

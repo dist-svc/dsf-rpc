@@ -3,6 +3,7 @@ use structopt::StructOpt;
 
 use dsf_core::types::*;
 use dsf_core::base::Body;
+use dsf_core::page::Page;
 
 use crate::{ServiceIdentifier};
 use crate::helpers::{data_from_str};
@@ -16,6 +17,20 @@ pub struct DataInfo {
 
     pub previous: Option<Signature>,
     pub signature: Signature,
+}
+
+impl std::convert::TryFrom<&Page> for DataInfo {
+    type Error = std::convert::Infallible;
+
+    fn try_from(page: &Page) -> Result<DataInfo, Self::Error> {
+        Ok(DataInfo {
+            service: page.id.clone(),
+            index: page.version,
+            body: page.body().clone(),
+            previous: page.previous_sig.clone(),
+            signature: page.signature.unwrap().clone(),
+        })
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]

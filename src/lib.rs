@@ -21,6 +21,7 @@ use rand::random;
 
 extern crate dsf_core;
 use dsf_core::types::*;
+use dsf_core::page::Page;
 
 #[macro_use]
 extern crate serde;
@@ -37,6 +38,8 @@ pub mod peer;
 pub use peer::*;
 pub mod service;
 pub use service::*;
+pub mod replica;
+pub use replica::*;
 
 pub mod display;
 
@@ -155,7 +158,7 @@ pub enum RequestKind {
 pub struct StreamCommand {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
-    
+
     #[structopt(flatten)]
     pub options: SubscribeOptions,
 }
@@ -204,6 +207,8 @@ pub enum ResponseKind {
     Datastore(Vec<(Id, Vec<Vec<u8>>)>),
 
     Data(Vec<DataInfo>),
+
+    Pages(Vec<Page>),
 
     //Value(String),
     Unrecognised,

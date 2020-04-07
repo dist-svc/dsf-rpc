@@ -48,9 +48,9 @@ pub enum ServiceCommands {
     /// Create a new service
     Create(CreateOptions),
 
-    #[structopt(name = "search")]
-    /// Search for an existing service
-    Search(LocateOptions),
+    #[structopt(name = "locate")]
+    /// Locate an existing service
+    Locate(LocateOptions),
 
     #[structopt(name = "register")]
     /// Create am existing / known service

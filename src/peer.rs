@@ -37,6 +37,7 @@ pub enum PeerAddress {
 #[cfg_attr(feature = "diesel", derive(diesel::Queryable))] 
 pub struct PeerInfo {
     pub id: Id,
+    pub index: usize,
     pub address: PeerAddress,
     pub state: PeerState,
     pub seen: Option<SystemTime>,
@@ -48,8 +49,8 @@ pub struct PeerInfo {
 
 
 impl PeerInfo {
-    pub fn new(id: Id, address: PeerAddress, state: PeerState, seen: Option<SystemTime>) -> Self {
-        Self{id, address, state, seen, sent: 0, received: 0, blocked: false}
+    pub fn new(id: Id, address: PeerAddress, state: PeerState, index: usize, seen: Option<SystemTime>) -> Self {
+        Self{id, address, state, seen, index, sent: 0, received: 0, blocked: false}
     }
 
     /// Fetch the address of a peer

@@ -52,17 +52,21 @@ pub enum ServiceCommands {
     /// Locate an existing service
     Locate(LocateOptions),
 
+    #[structopt(name = "info")]
+    /// Fetch information for a service
+    Info(InfoOptions),
+
     #[structopt(name = "register")]
     /// Create am existing / known service
-    Register(RegisterCommand),
+    Register(RegisterOptions),
 
     #[structopt(name = "subscribe")]
     /// Subscribe to a known service
-    Subscribe(SubscribeCommand),
+    Subscribe(SubscribeOptions),
 
     #[structopt(name = "unsubscribe")]
     /// Unsubscribe from a known service
-    Unsubscribe(UnsubscribeCommand),
+    Unsubscribe(UnsubscribeOptions),
 
     #[structopt(name = "set-key")]
     /// Set the encryption/decryption key for a given service
@@ -137,28 +141,22 @@ pub struct CreateInfo {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct RegisterCommand {
+pub struct RegisterOptions {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
 
-    #[structopt(flatten)]
-    pub options: RegisterOptions,
-}
-
-impl RegisterCommand {
-    pub fn new(id: Id) -> Self {
-        Self{
-            service: ServiceIdentifier{id: Some(id), index: None}, 
-            options: RegisterOptions{ no_replica: false },
-        }
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct RegisterOptions {
     #[structopt(long="no-replica")]
     /// Do not become a replica for the registered service
     pub no_replica: bool,
+}
+
+impl RegisterOptions {
+    pub fn new(id: Id) -> Self {
+        Self{
+            service: ServiceIdentifier{id: Some(id), index: None}, 
+            no_replica: false,
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -173,6 +171,10 @@ pub struct LocateOptions {
     #[structopt(short = "i", long = "id")]
     /// ID of the service to locate
     pub id: Id,
+
+    #[structopt(long)]
+    /// Search only in the local datastore
+    pub local_only: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -181,34 +183,22 @@ pub struct LocateInfo {
     pub updated: bool,
 }
 
-/// SubscibeCommand used in RPC command structure
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct SubscribeCommand {
+pub struct InfoOptions {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
-
-    #[structopt(flatten)]
-    pub options: SubscribeOptions,
 }
 
-/// Options for subscribe requests
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct SubscribeOptions {
-    
-}
-
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct UnsubscribeCommand {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
-    #[structopt(flatten)]
-    pub options: UnsubscribeOptions,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct UnsubscribeOptions {
-    
+    #[structopt(flatten)]
+    pub service: ServiceIdentifier,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

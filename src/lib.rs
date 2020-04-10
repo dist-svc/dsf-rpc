@@ -151,11 +151,11 @@ pub enum RequestKind {
 
     /// Stream data from a given service
     #[structopt(name = "stream")]
-    Stream(StreamCommand),
+    Stream(StreamOptions),
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct StreamCommand {
+pub struct StreamOptions {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
 
@@ -196,7 +196,7 @@ pub enum ResponseKind {
     Connected(ConnectInfo),
     Peers(Vec<(Id, PeerInfo)>),
 
-    Created(ServiceInfo),
+    Service(ServiceInfo),
     Services(Vec<ServiceInfo>),
     Registered(RegisterInfo),
     Located(LocateInfo),

@@ -79,7 +79,7 @@ impl Request {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct ServiceIdentifier {
-    #[structopt(short = "i", long = "id", group="identifier")]
+    #[structopt(short="i", long = "id", group="identifier")]
     /// Global service ID
     pub id: Option<Id>,
 
@@ -101,11 +101,11 @@ impl ServiceIdentifier {
 /// Paginator object supports paginating responses from the daemon
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct PageBounds {
-    #[structopt(long)]
+    #[structopt(long = "count")]
     /// Maximum number of responses to return
     pub count: Option<usize>,
 
-    #[structopt(long)]
+    #[structopt(long = "offset")]
     /// Offset of returned results
     pub offset: Option<usize>,
 }
@@ -151,16 +151,7 @@ pub enum RequestKind {
 
     /// Stream data from a given service
     #[structopt(name = "stream")]
-    Stream(StreamOptions),
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct StreamOptions {
-    #[structopt(flatten)]
-    pub service: ServiceIdentifier,
-
-    #[structopt(flatten)]
-    pub options: SubscribeOptions,
+    Stream(SubscribeOptions),
 }
 
 /// Response container for replies from the daemon to the client

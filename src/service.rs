@@ -1,5 +1,6 @@
 
 use std::time::SystemTime;
+use std::convert::TryFrom;
 
 use structopt::StructOpt;
 
@@ -76,7 +77,7 @@ pub enum ServiceCommands {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct ListOptions {
-    #[structopt(long)]
+    #[structopt(long = "application-id")]
     /// Application ID for filtering
     pub application_id: Option<u16>,
 }
@@ -172,7 +173,7 @@ pub struct LocateOptions {
     /// ID of the service to locate
     pub id: Id,
 
-    #[structopt(long)]
+    #[structopt(long = "local-only")]
     /// Search only in the local datastore
     pub local_only: bool,
 }

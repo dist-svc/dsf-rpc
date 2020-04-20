@@ -191,7 +191,8 @@ pub enum ResponseKind {
     Services(Vec<ServiceInfo>),
     Registered(RegisterInfo),
     Located(LocateInfo),
-    Subscribed(SubscribeInfo),
+
+    Subscribed(Vec<SubscriptionInfo>),
     
     Published(PublishInfo),
 

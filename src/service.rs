@@ -29,6 +29,7 @@ pub struct ServiceInfo {
     pub subscribers: usize,
     pub replicas: usize,
     pub origin: bool,
+    pub subscribed: bool,
 }
 
 #[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize, Display, EnumString)]
@@ -203,9 +204,12 @@ pub struct UnsubscribeOptions {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct SubscribeInfo {
-    /// Number of replicas successfully connected
-    pub count: u32
+pub struct SubscriptionInfo {
+    pub service_id: Id,
+    pub peer_id: Id,
+
+    pub updated: Option<SystemTime>,
+    pub expiry: Option<SystemTime>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]

@@ -1,6 +1,5 @@
 
 use std::time::SystemTime;
-use std::convert::TryFrom;
 
 use structopt::StructOpt;
 
@@ -204,9 +203,15 @@ pub struct UnsubscribeOptions {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub enum SubscriptionKind {
+    Peer(Id),
+    Socket(u32),
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct SubscriptionInfo {
     pub service_id: Id,
-    pub peer_id: Id,
+    pub kind: SubscriptionKind,
 
     pub updated: Option<SystemTime>,
     pub expiry: Option<SystemTime>,

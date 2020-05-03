@@ -1,4 +1,3 @@
-
 use std::time::SystemTime;
 
 extern crate chrono;
@@ -20,8 +19,8 @@ extern crate rand;
 use rand::random;
 
 extern crate dsf_core;
-use dsf_core::types::*;
 use dsf_core::page::Page;
+use dsf_core::types::*;
 
 #[macro_use]
 extern crate serde;
@@ -45,12 +44,11 @@ pub mod display;
 
 mod helpers;
 
-
 /// API trait implements RPC API for the daemon (or delegation)
 pub trait Rpc {
     type Error;
 
-    fn exec(&mut self, req: Request) -> Box<dyn Future<Output=Result<Response, Self::Error>>>;
+    fn exec(&mut self, req: Request) -> Box<dyn Future<Output = Result<Response, Self::Error>>>;
 }
 
 /// RPC Request container for requests from a client to the daemon
@@ -62,9 +60,9 @@ pub struct Request {
 
 impl Request {
     pub fn new(kind: RequestKind) -> Self {
-        Self{
+        Self {
             req_id: random(),
-            kind
+            kind,
         }
     }
 
@@ -79,22 +77,28 @@ impl Request {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct ServiceIdentifier {
-    #[structopt(short="i", long = "id", group="identifier")]
+    #[structopt(short = "i", long = "id", group = "identifier")]
     /// Global service ID
     pub id: Option<Id>,
 
-    #[structopt(short = "n", long = "index", group="identifier")]
+    #[structopt(short = "n", long = "index", group = "identifier")]
     /// Local service index
     pub index: Option<usize>,
 }
 
 impl ServiceIdentifier {
     pub fn id(id: Id) -> Self {
-        Self{id: Some(id), index: None}
+        Self {
+            id: Some(id),
+            index: None,
+        }
     }
 
     pub fn index(index: usize) -> Self {
-        Self{id: None, index: Some(index)}
+        Self {
+            id: None,
+            index: Some(index),
+        }
     }
 }
 
@@ -132,7 +136,7 @@ pub enum RequestKind {
     #[structopt(name = "peer")]
     /// Subcommand for managing and interacting with peers
     Peer(PeerCommands),
-    
+
     #[structopt(name = "service")]
     /// Subcommand for managing and interacting with services
     Service(ServiceCommands),
@@ -163,10 +167,7 @@ pub struct Response {
 
 impl Response {
     pub fn new(req_id: u64, kind: ResponseKind) -> Self {
-        Self{
-            req_id,
-            kind,
-        }
+        Self { req_id, kind }
     }
 
     pub fn req_id(&self) -> u64 {
@@ -182,7 +183,7 @@ impl Response {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum ResponseKind {
     None,
-    
+
     Status(StatusInfo),
     Connected(ConnectInfo),
     Peers(Vec<(Id, PeerInfo)>),
@@ -193,7 +194,7 @@ pub enum ResponseKind {
     Located(LocateInfo),
 
     Subscribed(Vec<SubscriptionInfo>),
-    
+
     Published(PublishInfo),
 
     Datastore(Vec<(Id, Vec<Vec<u8>>)>),
@@ -219,6 +220,7 @@ pub use dsf_core::base::Body;
 
 /// Parse a timestamp from a provided string
 fn timestamp_from_str(s: &str) -> Result<SystemTime, chrono_english::DateError> {
-    let t = chrono_english::parse_date_string(s, chrono::Local::now(), chrono_english::Dialect::Uk)?;
+    let t =
+        chrono_english::parse_date_string(s, chrono::Local::now(), chrono_english::Dialect::Uk)?;
     Ok(t.into())
 }

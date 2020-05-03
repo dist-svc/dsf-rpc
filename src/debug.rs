@@ -1,8 +1,6 @@
-
 use structopt::StructOpt;
 
-use crate::{ServiceIdentifier};
-
+use crate::ServiceIdentifier;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub enum DebugCommands {
@@ -24,9 +22,7 @@ pub enum DebugCommands {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub enum DatastoreCommands {
-
-}
+pub enum DatastoreCommands {}
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub enum DhtCommands {

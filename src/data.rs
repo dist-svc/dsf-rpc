@@ -1,12 +1,11 @@
-
 use structopt::StructOpt;
 
-use dsf_core::types::*;
 use dsf_core::base::Body;
 use dsf_core::page::Page;
+use dsf_core::types::*;
 
-use crate::{ServiceIdentifier};
-use crate::helpers::{data_from_str};
+use crate::helpers::data_from_str;
+use crate::ServiceIdentifier;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataInfo {
@@ -41,11 +40,11 @@ pub enum DataCommands {
 
     #[structopt(name = "sync")]
     /// Synchronize service data
-    Update{},
-        
+    Update {},
+
     #[structopt(name = "query")]
     /// Fetch data from a service
-    Query{},
+    Query {},
 
     #[structopt(name = "publish")]
     /// Publish data to a service
@@ -57,7 +56,7 @@ pub struct ListOptions {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
 
-    #[structopt(short = "c", long="count", default_value="1")]
+    #[structopt(short = "c", long = "count", default_value = "1")]
     pub n: usize,
 }
 
@@ -77,10 +76,16 @@ pub struct PublishOptions {
     pub data: Option<Data>,
 }
 
-
 impl PublishOptions {
     pub fn new(id: Id) -> Self {
-        Self{service: ServiceIdentifier{id: Some(id), index: None}, kind: None, data: None}
+        Self {
+            service: ServiceIdentifier {
+                id: Some(id),
+                index: None,
+            },
+            kind: None,
+            data: None,
+        }
     }
 }
 

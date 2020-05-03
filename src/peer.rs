@@ -1,16 +1,11 @@
-
-
 use std::time::{Duration, SystemTime};
-
-
 
 use structopt::StructOpt;
 
 use dsf_core::types::*;
 
-use crate::{ServiceIdentifier};
-use crate::helpers::{try_parse_sock_addr, parse_duration};
-
+use crate::helpers::{parse_duration, try_parse_sock_addr};
+use crate::ServiceIdentifier;
 
 /// PeerState defines the state of a peer
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Display)]
@@ -19,7 +14,6 @@ pub enum PeerState {
     Unknown,
     /// Once public keys have been exchanged this moves to the Known state
     Known(PublicKey),
-    
     //Peered(Service),
 }
 
@@ -34,7 +28,7 @@ pub enum PeerAddress {
 
 /// PeerInfo object for storage and exchange of peer information
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[cfg_attr(feature = "diesel", derive(diesel::Queryable))] 
+#[cfg_attr(feature = "diesel", derive(diesel::Queryable))]
 pub struct PeerInfo {
     pub id: Id,
     pub index: usize,
@@ -47,21 +41,35 @@ pub struct PeerInfo {
     pub blocked: bool,
 }
 
-
 impl PeerInfo {
-    pub fn new(id: Id, address: PeerAddress, state: PeerState, index: usize, seen: Option<SystemTime>) -> Self {
-        Self{id, address, state, seen, index, sent: 0, received: 0, blocked: false}
+    pub fn new(
+        id: Id,
+        address: PeerAddress,
+        state: PeerState,
+        index: usize,
+        seen: Option<SystemTime>,
+    ) -> Self {
+        Self {
+            id,
+            address,
+            state,
+            seen,
+            index,
+            sent: 0,
+            received: 0,
+            blocked: false,
+        }
     }
 
     /// Fetch the address of a peer
     pub fn address(&self) -> &Address {
         match &self.address {
             PeerAddress::Explicit(e) => e,
-            PeerAddress::Implicit(i) => i
+            PeerAddress::Implicit(i) => i,
         }
     }
 
-    pub fn update_address(&mut self, addr: PeerAddress){
+    pub fn update_address(&mut self, addr: PeerAddress) {
         use PeerAddress::*;
 
         match (&self.address, &addr) {
@@ -89,8 +97,6 @@ impl PeerInfo {
         self.seen = Some(seen);
     }
 }
-
-
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub enum PeerCommands {
@@ -141,9 +147,7 @@ pub struct ConnectOptions {
 
 // Peer list options
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
-pub struct PeerOptions {
-
-}
+pub struct PeerOptions {}
 
 /// ConnectOptions passed to connect function
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
@@ -157,11 +161,9 @@ pub struct SearchOptions {
     pub timeout: Option<Duration>,
 }
 
-
 /// ConnectInfo returned by connect function
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ConnectInfo {
     pub id: Id,
     pub peers: usize,
 }
-

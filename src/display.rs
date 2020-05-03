@@ -1,23 +1,17 @@
-
-
 use std::fmt::{Display, Formatter, Result};
 
 use colored::Colorize;
 
+use crate::{DataInfo, PeerInfo, ServiceInfo};
 use dsf_core::base::Body;
-use crate::{PeerInfo, ServiceInfo, DataInfo};
 
 #[cfg(nope)]
 impl Display for PeerAddress {
-    fn fmt(&self, f: &mut Formatter) -> Result {
-
-
-    }
+    fn fmt(&self, f: &mut Formatter) -> Result {}
 }
 
 impl Display for PeerInfo {
     fn fmt(&self, f: &mut Formatter) -> Result {
-
         if f.sign_plus() {
             write!(f, "id: {}", self.id)?;
         } else {
@@ -29,7 +23,7 @@ impl Display for PeerInfo {
         } else {
             write!(f, "{}", self.address())?;
         }
-        
+
         if f.sign_plus() {
             write!(f, "\n  - state: {}", self.state)?;
         } else {
@@ -57,10 +51,8 @@ impl Display for PeerInfo {
     }
 }
 
-
 impl Display for DataInfo {
     fn fmt(&self, f: &mut Formatter) -> Result {
-
         if f.sign_plus() {
             write!(f, "index: {}", self.index)?;
         } else {
@@ -106,10 +98,8 @@ impl Display for DataInfo {
     }
 }
 
-
 impl Display for ServiceInfo {
     fn fmt(&self, f: &mut Formatter) -> Result {
-
         if f.sign_plus() {
             write!(f, "id: {}", self.id)?;
         } else {
@@ -121,20 +111,18 @@ impl Display for ServiceInfo {
         } else {
             write!(f, "{}", self.index)?;
         }
-        
+
         if f.sign_plus() {
             write!(f, "\n  - state: {}", self.state)?;
         } else {
             write!(f, ", {}", self.state)?;
         }
-        
 
         if f.sign_plus() {
             write!(f, "\n  - public key: {}", self.public_key)?;
         } else {
-             write!(f, ", {}", self.public_key)?;
+            write!(f, ", {}", self.public_key)?;
         }
-       
 
         if let Some(sk) = self.secret_key {
             if f.sign_plus() {
@@ -142,7 +130,6 @@ impl Display for ServiceInfo {
             } else {
                 write!(f, ", {}", sk)?;
             }
-            
         }
 
         if let Some(updated) = self.last_updated {
@@ -154,7 +141,6 @@ impl Display for ServiceInfo {
             } else {
                 write!(f, ", {}", ht)?;
             }
-            
         }
 
         if f.sign_plus() {

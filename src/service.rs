@@ -1,15 +1,14 @@
-
 use std::time::SystemTime;
 
 use structopt::StructOpt;
 
 use dsf_core::types::*;
 
-use crate::{ServiceIdentifier, Body};
 pub use crate::helpers::{try_load_file, try_parse_key_value};
+use crate::{Body, ServiceIdentifier};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-//#[cfg_attr(feature = "diesel", derive(diesel::Queryable))] 
+//#[cfg_attr(feature = "diesel", derive(diesel::Queryable))]
 //#[cfg_attr(feature = "diesel", table_name="services")]
 pub struct ServiceInfo {
     pub id: Id,
@@ -21,7 +20,7 @@ pub struct ServiceInfo {
     pub secret_key: Option<SecretKey>,
 
     pub last_updated: Option<SystemTime>,
-    
+
     pub primary_page: Option<Signature>,
     pub replica_page: Option<Signature>,
 
@@ -74,14 +73,12 @@ pub enum ServiceCommands {
     SetKey(SetKeyOptions),
 }
 
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct ListOptions {
     #[structopt(long = "application-id")]
     /// Application ID for filtering
     pub application_id: Option<u16>,
 }
-
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct CreateOptions {
@@ -116,7 +113,7 @@ pub struct CreateOptions {
 
 impl Default for CreateOptions {
     fn default() -> Self {
-        Self{
+        Self {
             application_id: 0,
             page_kind: None,
             body: None,
@@ -146,15 +143,18 @@ pub struct RegisterOptions {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
 
-    #[structopt(long="no-replica")]
+    #[structopt(long = "no-replica")]
     /// Do not become a replica for the registered service
     pub no_replica: bool,
 }
 
 impl RegisterOptions {
     pub fn new(id: Id) -> Self {
-        Self{
-            service: ServiceIdentifier{id: Some(id), index: None}, 
+        Self {
+            service: ServiceIdentifier {
+                id: Some(id),
+                index: None,
+            },
             no_replica: false,
         }
     }

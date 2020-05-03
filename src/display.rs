@@ -124,7 +124,7 @@ impl Display for ServiceInfo {
             write!(f, ", {}", self.public_key)?;
         }
 
-        if let Some(sk) = self.secret_key {
+        if let Some(sk) = &self.secret_key {
             if f.sign_plus() {
                 write!(f, "\n  - secret key: {}", sk.to_string().dimmed())?;
             } else {

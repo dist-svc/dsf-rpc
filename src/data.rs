@@ -27,7 +27,7 @@ impl std::convert::TryFrom<&Page> for DataInfo {
             index: page.version,
             body: page.body().clone(),
             previous: page.previous_sig.clone(),
-            signature: page.signature.unwrap().clone(),
+            signature: page.signature.clone().unwrap(),
         })
     }
 }

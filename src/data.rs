@@ -5,7 +5,7 @@ use dsf_core::page::Page;
 use dsf_core::types::*;
 
 use crate::helpers::data_from_str;
-use crate::ServiceIdentifier;
+use crate::{ServiceIdentifier, PageBounds};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataInfo {
@@ -56,8 +56,8 @@ pub struct ListOptions {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
 
-    #[structopt(short = "c", long = "count", default_value = "1")]
-    pub n: usize,
+    #[structopt(flatten)]
+    pub bounds: PageBounds,
 }
 
 pub type Data = Vec<u8>;

@@ -3,6 +3,7 @@ use std::time::SystemTime;
 use structopt::StructOpt;
 
 use dsf_core::types::*;
+use dsf_core::base::NewBody;
 
 pub use crate::helpers::{try_load_file, try_parse_key_value};
 use crate::{Body, ServiceIdentifier};
@@ -23,6 +24,8 @@ pub struct ServiceInfo {
 
     pub primary_page: Option<Signature>,
     pub replica_page: Option<Signature>,
+
+    pub body: NewBody<Vec<u8>>,
 
     pub subscribers: usize,
     pub replicas: usize,

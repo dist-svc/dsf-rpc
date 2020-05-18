@@ -193,16 +193,34 @@ pub struct InfoOptions {
     pub service: ServiceIdentifier,
 }
 
+impl From<ServiceIdentifier> for InfoOptions {
+    fn from(service: ServiceIdentifier) -> Self {
+        Self{service}
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct SubscribeOptions {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
 }
 
+impl From<ServiceIdentifier> for SubscribeOptions {
+    fn from(service: ServiceIdentifier) -> Self {
+        Self{service}
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct UnsubscribeOptions {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
+}
+
+impl From<ServiceIdentifier> for UnsubscribeOptions {
+    fn from(service: ServiceIdentifier) -> Self {
+        Self{service}
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

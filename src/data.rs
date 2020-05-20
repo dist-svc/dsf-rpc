@@ -5,7 +5,7 @@ use dsf_core::page::Page;
 use dsf_core::types::*;
 
 use crate::helpers::data_from_str;
-use crate::{ServiceIdentifier, PageBounds};
+use crate::{PageBounds, ServiceIdentifier};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataInfo {

@@ -2,8 +2,8 @@ use std::time::SystemTime;
 
 use structopt::StructOpt;
 
-use dsf_core::types::*;
 use dsf_core::base::NewBody;
+use dsf_core::types::*;
 
 pub use crate::helpers::{try_load_file, try_parse_key_value};
 use crate::{Body, ServiceIdentifier};
@@ -195,7 +195,7 @@ pub struct InfoOptions {
 
 impl From<ServiceIdentifier> for InfoOptions {
     fn from(service: ServiceIdentifier) -> Self {
-        Self{service}
+        Self { service }
     }
 }
 
@@ -207,7 +207,7 @@ pub struct SubscribeOptions {
 
 impl From<ServiceIdentifier> for SubscribeOptions {
     fn from(service: ServiceIdentifier) -> Self {
-        Self{service}
+        Self { service }
     }
 }
 
@@ -219,7 +219,7 @@ pub struct UnsubscribeOptions {
 
 impl From<ServiceIdentifier> for UnsubscribeOptions {
     fn from(service: ServiceIdentifier) -> Self {
-        Self{service}
+        Self { service }
     }
 }
 

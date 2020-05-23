@@ -74,6 +74,10 @@ pub enum ServiceCommands {
     #[structopt(name = "set-key")]
     /// Set the encryption/decryption key for a given service
     SetKey(SetKeyOptions),
+
+    #[structopt(name = "remove")]
+    /// Remove a service from the service list (and database if specified)
+    Remove(RemoveOptions),
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
@@ -246,4 +250,14 @@ pub struct SetKeyOptions {
     #[structopt(short = "s", long = "secret-key")]
     /// Secret key for service access
     pub secret_key: Option<SecretKey>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+pub struct RemoveOptions {
+    #[structopt(flatten)]
+    pub service: ServiceIdentifier,
+
+    #[structopt(long)]
+    /// Attempt to remove an owned service from the network
+    pub purge: bool,
 }

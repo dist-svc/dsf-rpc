@@ -186,6 +186,8 @@ pub enum ResponseKind {
 
     Status(StatusInfo),
     Connected(ConnectInfo),
+
+    Peer(PeerInfo),
     Peers(Vec<(Id, PeerInfo)>),
 
     Service(ServiceInfo),

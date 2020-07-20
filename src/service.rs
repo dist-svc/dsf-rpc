@@ -1,4 +1,5 @@
 use std::time::SystemTime;
+use std::net::SocketAddr;
 
 use structopt::StructOpt;
 
@@ -33,7 +34,8 @@ pub struct ServiceInfo {
     pub subscribed: bool,
 }
 
-#[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize, Display, EnumString)]
+#[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize, Display)]
+#[cfg_attr(feature = "std", derive(EnumString))]
 pub enum ServiceState {
     Created,
     Registered,
@@ -103,7 +105,7 @@ pub struct CreateOptions {
 
     #[structopt(short = "a", long = "address")]
     /// Service Addresses
-    pub addresses: Vec<Address>,
+    pub addresses: Vec<SocketAddr>,
 
     #[structopt(short = "m", long = "metadata", parse(try_from_str = try_parse_key_value))]
     /// Service Metadata key:value pairs

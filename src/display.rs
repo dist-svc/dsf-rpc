@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter, Result};
+use std::net::SocketAddr;
 
 use colored::Colorize;
 
@@ -19,9 +20,9 @@ impl Display for PeerInfo {
         }
 
         if f.sign_plus() {
-            write!(f, "\n  - address: {}", self.address())?;
+            write!(f, "\n  - address: {}", SocketAddr::from(*self.address()))?;
         } else {
-            write!(f, "{}", self.address())?;
+            write!(f, "{}", SocketAddr::from(*self.address()))?;
         }
 
         if f.sign_plus() {

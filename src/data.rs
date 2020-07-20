@@ -24,7 +24,7 @@ impl std::convert::TryFrom<&Page> for DataInfo {
     fn try_from(page: &Page) -> Result<DataInfo, Self::Error> {
         Ok(DataInfo {
             service: page.id.clone(),
-            index: page.version,
+            index: page.header().index,
             body: page.body().clone(),
             previous: page.previous_sig.clone(),
             signature: page.signature.clone().unwrap(),

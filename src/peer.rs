@@ -1,4 +1,5 @@
 use std::time::{Duration, SystemTime};
+use std::net::SocketAddr;
 
 use structopt::StructOpt;
 
@@ -134,7 +135,7 @@ pub enum PeerCommands {
 pub struct ConnectOptions {
     #[structopt(parse(try_from_str = try_parse_sock_addr))]
     /// Socket address for connection attempt
-    pub address: Address,
+    pub address: SocketAddr,
 
     #[structopt(short = "i", long = "id")]
     /// ID of the remote node

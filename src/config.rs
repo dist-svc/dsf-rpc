@@ -1,4 +1,5 @@
 use structopt::StructOpt;
+use std::net::SocketAddr;
 
 use dsf_core::types::*;
 
@@ -19,5 +20,5 @@ pub enum ConfigCommands {
 pub struct SocketAddress {
     #[structopt(parse(try_from_str = try_parse_sock_addr))]
     /// Peer socket address
-    pub address: Address,
+    pub address: SocketAddr,
 }

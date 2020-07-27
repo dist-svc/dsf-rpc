@@ -1,5 +1,5 @@
-use structopt::StructOpt;
 use std::net::SocketAddr;
+use structopt::StructOpt;
 
 use dsf_core::types::*;
 

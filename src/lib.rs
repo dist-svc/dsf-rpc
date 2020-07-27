@@ -19,9 +19,9 @@ extern crate rand;
 use rand::random;
 
 extern crate dsf_core;
+use dsf_core::error::Error;
 use dsf_core::page::Page;
 use dsf_core::types::*;
-use dsf_core::error::Error;
 
 #[macro_use]
 extern crate serde;

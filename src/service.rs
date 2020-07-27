@@ -1,5 +1,5 @@
-use std::time::SystemTime;
 use std::net::SocketAddr;
+use std::time::SystemTime;
 
 use structopt::StructOpt;
 

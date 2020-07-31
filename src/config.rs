@@ -1,8 +1,6 @@
 use std::net::SocketAddr;
 use structopt::StructOpt;
 
-use dsf_core::types::*;
-
 use crate::helpers::try_parse_sock_addr;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]

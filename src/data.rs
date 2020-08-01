@@ -67,9 +67,9 @@ pub struct PublishOptions {
     #[structopt(flatten)]
     pub service: ServiceIdentifier,
 
-    #[structopt(short = "k", long = "kind")]
+    #[structopt(short = "k", long = "kind", default_value = "generic")]
     /// Data page kind (defaults to generic)
-    pub kind: Option<DataKind>,
+    pub kind: DataKind,
 
     #[structopt(short = "d", long = "data", parse(from_str = data_from_str))]
     /// Data body as a string
@@ -83,7 +83,7 @@ impl PublishOptions {
                 id: Some(id),
                 index: None,
             },
-            kind: None,
+            kind: DataKind::Generic,
             data: None,
         }
     }

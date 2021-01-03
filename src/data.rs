@@ -49,6 +49,10 @@ pub enum DataCommands {
     #[structopt(name = "publish")]
     /// Publish data to a service
     Publish(PublishOptions),
+
+    #[structopt(name = "push")]
+    /// Push pre-signed data for a known server
+    Push(PushOptions),
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
@@ -85,6 +89,28 @@ impl PublishOptions {
             },
             kind: DataKind::Generic,
             data: None,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+pub struct PushOptions {
+    #[structopt(flatten)]
+    pub service: ServiceIdentifier,
+
+    #[structopt(short = "d", long = "data", parse(from_str = data_from_str))]
+    /// Base64 encoded (pre-signed) DSF object
+    pub data: Data,
+}
+
+impl PushOptions {
+    pub fn new(id: Id, data: Vec<u8>) -> Self {
+        Self {
+            service: ServiceIdentifier {
+                id: Some(id),
+                index: None,
+            },
+            data,
         }
     }
 }

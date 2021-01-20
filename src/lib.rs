@@ -40,6 +40,8 @@ pub mod service;
 pub use service::*;
 pub mod replica;
 pub use replica::*;
+pub mod subscriber;
+pub use subscriber::*;
 
 pub mod display;
 
@@ -145,6 +147,10 @@ pub enum RequestKind {
     #[structopt(name = "data")]
     /// Subcommand for managing data
     Data(DataCommands),
+
+    #[structopt(name = "subscriber")]
+    /// Subcommand for managing subscribers
+    Subscriber(SubscriberCommands),
 
     #[structopt(name = "config")]
     /// Subcommand for managing runtime daemon configuration

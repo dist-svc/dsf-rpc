@@ -6,6 +6,7 @@ extern crate chrono_humanize;
 extern crate humantime;
 
 extern crate futures;
+use dsf_core::api::ServiceHandle;
 use futures::prelude::*;
 extern crate structopt;
 use structopt::StructOpt;
@@ -30,18 +31,27 @@ extern crate colored;
 
 pub mod config;
 pub use config::*;
+
 pub mod data;
 pub use data::*;
+
 pub mod debug;
 pub use debug::*;
+
 pub mod peer;
 pub use peer::*;
+
 pub mod service;
 pub use service::*;
+
 pub mod replica;
 pub use replica::*;
+
 pub mod subscriber;
 pub use subscriber::*;
+
+pub mod page;
+pub use page::*;
 
 pub mod display;
 
@@ -105,6 +115,18 @@ impl ServiceIdentifier {
     }
 }
 
+impl From<ServiceHandle> for ServiceIdentifier {
+    fn from(h: ServiceHandle) -> Self {
+        Self::id(h.id)
+    }
+}
+
+impl From<Id> for ServiceIdentifier {
+    fn from(id: Id) -> Self {
+        Self::id(id)
+    }
+}
+
 /// Paginator object supports paginating responses from the daemon
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct PageBounds {
@@ -162,6 +184,10 @@ pub enum RequestKind {
     /// Subcommand for managing and interacting with services
     Service(ServiceCommands),
 
+    /// Object requests
+    #[structopt(name = "page")]
+    Page(PageCommands),
+
     #[structopt(name = "data")]
     /// Subcommand for managing data
     Data(DataCommands),
@@ -181,6 +207,7 @@ pub enum RequestKind {
     /// Stream data from a given service
     #[structopt(name = "stream")]
     Stream(SubscribeOptions),
+
 }
 
 /// Response container for replies from the daemon to the client
@@ -229,6 +256,8 @@ pub enum ResponseKind {
     Data(Vec<DataInfo>),
 
     Pages(Vec<Page>),
+
+    Page(Page),
 
     //Value(String),
     Unrecognised,

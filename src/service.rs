@@ -3,7 +3,7 @@ use std::time::SystemTime;
 
 use structopt::StructOpt;
 
-use dsf_core::base::NewBody;
+use dsf_core::{base::MaybeEncrypted, page::Page, options::Options};
 use dsf_core::types::*;
 
 pub use crate::helpers::{try_load_file, try_parse_key_value};
@@ -25,8 +25,6 @@ pub struct ServiceInfo {
 
     pub primary_page: Option<Signature>,
     pub replica_page: Option<Signature>,
-
-    pub body: NewBody<Vec<u8>>,
 
     pub subscribers: usize,
     pub replicas: usize,
@@ -191,6 +189,20 @@ pub struct LocateOptions {
 pub struct LocateInfo {
     pub origin: bool,
     pub updated: bool,
+    pub page_version: u16,
+    #[serde(skip)]
+    pub page: Option<Page>,
+}
+
+impl Default for LocateInfo {
+    fn default() -> Self {
+        Self{
+            origin: false,
+            updated: false,
+            page_version: 0,
+            page: None,
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
@@ -233,6 +245,7 @@ impl From<ServiceIdentifier> for UnsubscribeOptions {
 pub enum SubscriptionKind {
     Peer(Id),
     Socket(u32),
+    None,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

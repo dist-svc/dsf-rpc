@@ -3,7 +3,7 @@ use std::time::SystemTime;
 
 use structopt::StructOpt;
 
-use dsf_core::{base::MaybeEncrypted, page::Page, options::Options};
+use dsf_core::{page::Page};
 use dsf_core::types::*;
 
 pub use crate::helpers::{try_load_file, try_parse_key_value};

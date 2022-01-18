@@ -26,7 +26,7 @@ pub fn try_load_file(from: &str) -> Result<Body, IoError> {
 }
 
 pub fn try_parse_key_value(from: &str) -> Result<(String, String), IoError> {
-    let split: Vec<_> = from.split(":").collect();
+    let split: Vec<_> = from.split(':').collect();
     if split.len() != 2 {
         return Err(IoError::new(
             IoErrorKind::Other,

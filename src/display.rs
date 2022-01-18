@@ -68,8 +68,8 @@ impl Display for DataInfo {
 
         let body = match &self.body {
             Body::Cleartext(v) => format!("{:?}", v).green(),
-            Body::Encrypted(_) => format!("Encrypted").red(),
-            Body::None => format!("None").blue(),
+            Body::Encrypted(_) => "Encrypted".to_string().red(),
+            Body::None => "None".to_string().blue(),
         };
 
         if f.sign_plus() {
@@ -80,7 +80,7 @@ impl Display for DataInfo {
 
         let parent = match &self.previous {
             Some(p) => format!("{}", p).green(),
-            None => format!("None").red(),
+            None => "None".to_string().red(),
         };
 
         if f.sign_plus() {

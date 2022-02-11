@@ -1,9 +1,9 @@
 use std::net::SocketAddr;
 use std::time::SystemTime;
 
+use dsf_core::wire::Container;
 use structopt::StructOpt;
 
-use dsf_core::{page::Page};
 use dsf_core::types::*;
 
 pub use crate::helpers::{try_load_file, try_parse_key_value};
@@ -191,7 +191,7 @@ pub struct LocateInfo {
     pub updated: bool,
     pub page_version: u16,
     #[serde(skip)]
-    pub page: Option<Page>,
+    pub page: Option<Container>,
 }
 
 impl Default for LocateInfo {
@@ -255,6 +255,20 @@ pub struct SubscriptionInfo {
 
     pub updated: Option<SystemTime>,
     pub expiry: Option<SystemTime>,
+
+    pub qos: QosPriority,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub enum QosPriority {
+    None = 0,
+    Latency = 1,
+}
+
+impl SubscriptionInfo {
+    pub fn new(service_id: Id, kind: SubscriptionKind) -> Self {
+        Self{ service_id, kind, updated: None, expiry: None, qos: QosPriority::None }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]

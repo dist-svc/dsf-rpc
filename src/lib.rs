@@ -7,6 +7,7 @@ extern crate humantime;
 
 extern crate futures;
 use dsf_core::api::ServiceHandle;
+use dsf_core::wire::Container;
 use futures::prelude::*;
 extern crate structopt;
 use structopt::StructOpt;
@@ -21,7 +22,6 @@ use rand::random;
 
 extern crate dsf_core;
 use dsf_core::error::Error;
-use dsf_core::page::Page;
 use dsf_core::types::*;
 
 #[macro_use]
@@ -255,9 +255,9 @@ pub enum ResponseKind {
 
     Data(Vec<DataInfo>),
 
-    Pages(Vec<Page>),
+    Pages(Vec<Container>),
 
-    Page(Page),
+    Page(Container),
 
     //Value(String),
     Unrecognised,

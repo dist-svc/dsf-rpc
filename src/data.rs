@@ -1,7 +1,9 @@
+use dsf_core::options::Filters;
+use dsf_core::prelude::MaybeEncrypted;
+use dsf_core::wire::Container;
 use structopt::StructOpt;
 
 use dsf_core::base::Body;
-use dsf_core::page::Page;
 use dsf_core::types::*;
 
 use crate::helpers::data_from_str;
@@ -18,16 +20,21 @@ pub struct DataInfo {
     pub signature: Signature,
 }
 
-impl std::convert::TryFrom<&Page> for DataInfo {
+impl std::convert::TryFrom<&Container> for DataInfo {
     type Error = std::convert::Infallible;
 
-    fn try_from(page: &Page) -> Result<DataInfo, Self::Error> {
+    fn try_from(page: &Container) -> Result<DataInfo, Self::Error> {
+        let body = match page.encrypted() {
+            true => MaybeEncrypted::Encrypted(page.body_raw().to_vec()),
+            false => MaybeEncrypted::Cleartext(page.body_raw().to_vec()),
+        };
+
         Ok(DataInfo {
-            service: page.id.clone(),
-            index: page.header().index,
-            body: page.body().clone(),
-            previous: page.previous_sig.clone(),
-            signature: page.signature.clone().unwrap(),
+            service: page.id(),
+            index: page.header().index(),
+            body,
+            previous: page.public_options_iter().prev_sig(),
+            signature: page.signature(),
         })
     }
 }

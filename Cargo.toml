@@ -24,7 +24,7 @@ chrono-humanize = "0.0.11"
 chrono-english = "0.1.4"
 
 diesel = { version = "1.4.3", optional = true}
-strum = "0.17.1"
+strum = "0.23.0"
 strum_macros = "0.17.1"
 
 [dependencies.dsf-core]

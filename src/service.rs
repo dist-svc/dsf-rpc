@@ -1,7 +1,9 @@
 use std::net::SocketAddr;
 use std::time::SystemTime;
 
-use dsf_core::wire::Container;
+use strum::{VariantNames};
+
+use dsf_core::{wire::Container, options::Options};
 use structopt::StructOpt;
 
 use dsf_core::types::*;
@@ -60,7 +62,7 @@ pub enum ServiceCommands {
     Info(InfoOptions),
 
     #[structopt(name = "register")]
-    /// Create am existing / known service
+    /// Register an existing / known service
     Register(RegisterOptions),
 
     #[structopt(name = "subscribe")]
@@ -93,9 +95,9 @@ pub struct CreateOptions {
     /// Application ID    
     pub application_id: u16,
 
-    #[structopt(short = "k", long = "page-kind")]
+    #[structopt(short = "k", long = "page-kind", possible_values=PageKind::VARIANTS)]
     /// Page Kind (defaults to Generic)
-    pub page_kind: Option<u16>,
+    pub page_kind: Option<PageKind>,
 
     #[structopt(name = "body", parse(try_from_str = try_load_file))]
     /// Service Page Body (loaded from the specified file)
@@ -108,6 +110,14 @@ pub struct CreateOptions {
     #[structopt(short = "m", long = "metadata", parse(try_from_str = try_parse_key_value))]
     /// Service Metadata key:value pairs
     pub metadata: Vec<(String, String)>,
+
+    #[structopt(long)]
+    /// Service metadata / options
+    pub public_options: Vec<Options>,
+
+    #[structopt(long)]
+    /// Service metadata / options
+    pub private_options: Vec<Options>,
 
     #[structopt(short = "p", long = "public")]
     /// Indicate the service should be public (unencrypted)
@@ -126,6 +136,8 @@ impl Default for CreateOptions {
             body: None,
             addresses: vec![],
             metadata: vec![],
+            public_options: vec![],
+            private_options: vec![],
             public: false,
             register: false,
         }

@@ -53,6 +53,9 @@ pub use subscriber::*;
 pub mod page;
 pub use page::*;
 
+pub mod name;
+pub use name::*;
+
 pub mod display;
 
 mod helpers;
@@ -184,6 +187,10 @@ pub enum RequestKind {
     /// Subcommand for managing and interacting with services
     Service(ServiceCommands),
 
+    #[structopt(name = "ns")]
+    /// Subcommand for managing and interacting with name services
+    Ns(NsCommands),
+
     /// Object requests
     #[structopt(name = "page")]
     Page(PageCommands),
@@ -252,6 +259,8 @@ pub enum ResponseKind {
     Published(PublishInfo),
 
     Datastore(Vec<(Id, Vec<Vec<u8>>)>),
+
+    Ns(NsRegisterInfo),
 
     Data(Vec<DataInfo>),
 

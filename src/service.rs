@@ -125,7 +125,7 @@ pub struct CreateOptions {
 
     #[structopt(name = "body", parse(try_from_str = try_load_file))]
     /// Service Page Body (loaded from the specified file)
-    pub body: Option<Body>,
+    pub body: Option<Data>,
 
     #[structopt(short = "a", long = "address")]
     /// Service Addresses
@@ -151,6 +151,8 @@ pub struct CreateOptions {
     /// Indicate the service should be registered and replicated following creation
     pub register: bool,
 }
+
+pub type Data = Vec<u8>;
 
 impl Default for CreateOptions {
     fn default() -> Self {

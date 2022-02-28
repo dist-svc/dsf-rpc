@@ -6,8 +6,6 @@ use std::time::Duration;
 
 use humantime::Duration as HumanDuration;
 
-use crate::Body;
-
 pub fn try_parse_sock_addr(from: &str) -> Result<SocketAddr, IoError> {
     let mut addrs = from.to_socket_addrs()?;
 
@@ -20,9 +18,9 @@ pub fn try_parse_sock_addr(from: &str) -> Result<SocketAddr, IoError> {
     }
 }
 
-pub fn try_load_file(from: &str) -> Result<Body, IoError> {
+pub fn try_load_file(from: &str) -> Result<Vec<u8>, IoError> {
     let data = fs::read(from)?;
-    Ok(Body::Cleartext(data))
+    Ok(data)
 }
 
 pub fn try_parse_key_value(from: &str) -> Result<(String, String), IoError> {

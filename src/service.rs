@@ -1,15 +1,15 @@
 use std::net::SocketAddr;
 use std::time::SystemTime;
 
-use strum::{VariantNames};
+use strum::VariantNames;
 
-use dsf_core::{wire::Container, options::Options, prelude::Service};
+use dsf_core::{options::Options, prelude::Service, wire::Container};
 use structopt::StructOpt;
 
 use dsf_core::types::*;
 
 pub use crate::helpers::{try_load_file, try_parse_key_value};
-use crate::{Body, ServiceIdentifier};
+use crate::{ServiceIdentifier};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 //#[cfg_attr(feature = "diesel", derive(diesel::Queryable))]
@@ -38,7 +38,7 @@ impl From<&Service> for ServiceInfo {
     /// Create a default service info object for a service.
     /// Note that fields undefined within the service will be zero-initialised
     fn from(svc: &Service) -> Self {
-        Self{
+        Self {
             id: svc.id(),
             index: svc.version() as usize,
             state: ServiceState::Created,
@@ -49,7 +49,7 @@ impl From<&Service> for ServiceInfo {
             last_updated: None,
             primary_page: None,
             replica_page: None,
-            
+
             subscribers: 0,
             replicas: 0,
             origin: svc.is_origin(),
@@ -114,6 +114,7 @@ pub struct ListOptions {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+#[derive(Default)]
 pub struct CreateOptions {
     #[structopt(short = "i", long = "application-id", default_value = "0")]
     /// Application ID    
@@ -154,21 +155,7 @@ pub struct CreateOptions {
 
 pub type Data = Vec<u8>;
 
-impl Default for CreateOptions {
-    fn default() -> Self {
-        Self {
-            application_id: 0,
-            page_kind: None,
-            body: None,
-            addresses: vec![],
-            metadata: vec![],
-            public_options: vec![],
-            private_options: vec![],
-            public: false,
-            register: false,
-        }
-    }
-}
+
 
 impl CreateOptions {
     pub fn and_register(mut self) -> Self {
@@ -224,6 +211,7 @@ pub struct LocateOptions {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default)]
 pub struct LocateInfo {
     pub origin: bool,
     pub updated: bool,
@@ -232,16 +220,7 @@ pub struct LocateInfo {
     pub page: Option<Container>,
 }
 
-impl Default for LocateInfo {
-    fn default() -> Self {
-        Self{
-            origin: false,
-            updated: false,
-            page_version: 0,
-            page: None,
-        }
-    }
-}
+
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub struct InfoOptions {
@@ -305,7 +284,13 @@ pub enum QosPriority {
 
 impl SubscriptionInfo {
     pub fn new(service_id: Id, kind: SubscriptionKind) -> Self {
-        Self{ service_id, kind, updated: None, expiry: None, qos: QosPriority::None }
+        Self {
+            service_id,
+            kind,
+            updated: None,
+            expiry: None,
+            qos: QosPriority::None,
+        }
     }
 }
 

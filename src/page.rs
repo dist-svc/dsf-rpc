@@ -1,16 +1,14 @@
-
+use serde::{Deserialize, Serialize};
 use structopt::StructOpt;
-use serde::{Serialize, Deserialize};
 
 use dsf_core::types::*;
 
 use crate::ServiceIdentifier;
 
-
 #[derive(Clone, Debug, PartialEq, StructOpt, Serialize, Deserialize)]
 pub enum PageCommands {
     /// Fetch a page by signature
-    Fetch(FetchOptions)
+    Fetch(FetchOptions),
 }
 
 #[derive(Clone, Debug, PartialEq, StructOpt, Serialize, Deserialize)]
@@ -23,4 +21,3 @@ pub struct FetchOptions {
     #[structopt(long)]
     pub page_sig: Signature,
 }
-

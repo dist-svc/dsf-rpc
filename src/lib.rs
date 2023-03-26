@@ -132,6 +132,7 @@ impl From<Id> for ServiceIdentifier {
 
 /// Paginator object supports paginating responses from the daemon
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+#[derive(Default)]
 pub struct PageBounds {
     #[structopt(long = "count")]
     /// Maximum number of responses to return
@@ -142,17 +143,11 @@ pub struct PageBounds {
     pub offset: Option<usize>,
 }
 
-impl Default for PageBounds {
-    fn default() -> Self {
-        Self{
-            count: None,
-            offset: None,
-        }
-    }
-}
+
 
 /// Time bounded object supports limiting queries by time
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
+#[derive(Default)]
 pub struct TimeBounds {
     /// Start time for data query
     #[structopt(long, parse(try_from_str = timestamp_from_str))]
@@ -163,14 +158,7 @@ pub struct TimeBounds {
     pub until: Option<SystemTime>,
 }
 
-impl Default for TimeBounds {
-    fn default() -> Self {
-        Self{
-            from: None,
-            until: None,
-        }
-    }
-}
+
 
 /// Specific request kinds for issuing requests to the daemon from the client
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
@@ -214,7 +202,6 @@ pub enum RequestKind {
     /// Stream data from a given service
     #[structopt(name = "stream")]
     Stream(SubscribeOptions),
-
 }
 
 /// Response container for replies from the daemon to the client

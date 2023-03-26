@@ -7,7 +7,7 @@ use dsf_core::base::Body;
 use dsf_core::types::*;
 
 use crate::helpers::data_from_str;
-use crate::{PageBounds, TimeBounds, ServiceIdentifier};
+use crate::{PageBounds, ServiceIdentifier, TimeBounds};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataInfo {

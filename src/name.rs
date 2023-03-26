@@ -1,24 +1,22 @@
-use std::time::SystemTime;
 
+
+use serde::{Deserialize, Serialize};
 use structopt::StructOpt;
-use serde::{Serialize, Deserialize};
 
 use dsf_core::{prelude::*, types::CryptoHash};
 
 use crate::ServiceIdentifier;
-
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StructOpt)]
 pub enum NsCommands {
     #[structopt()]
     /// Search using the specified name service
     Search(NsSearchOptions),
-    
+
     #[structopt()]
     /// TODO: De-register an external address for the daemon
     Register(NsRegisterOptions),
 }
-
 
 #[derive(Clone, PartialEq, Debug, Serialize, Deserialize, StructOpt)]
 pub struct NsSearchOptions {
@@ -26,11 +24,11 @@ pub struct NsSearchOptions {
     /// NameServer filter / selection
     pub ns: ServiceIdentifier,
 
-    #[structopt(long, group="filters")]
+    #[structopt(long, group = "filters")]
     /// Service for search operation
     pub name: Option<String>,
 
-    #[structopt(long, group="filters")]
+    #[structopt(long, group = "filters")]
     /// Hashes for searching
     pub hash: Option<CryptoHash>,
 }
